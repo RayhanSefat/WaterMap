@@ -27,7 +27,7 @@
 <script>
 
 // Initialize map 
-var map = L.map('map').setView([10, 85], 5);
+var map = L.map('map').setView([21.6, 90.5], 8); // Adjust the center and zoom level
 
 // Add OpenStreetMap base layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -36,6 +36,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // Define zone polygons
 var zone1 = L.polygon([
+  // ... (your polygon coordinates)
   [22.3, 91.78],
   [21.9, 91.85],
   [21.84, 91.8],
@@ -51,6 +52,7 @@ var zone1 = L.polygon([
 ]).addTo(map).bindPopup("Zone 1<br>Temperature: 24°C-32°C<br>BOD: 119 mg/L - 146 mg/L<br>COD: 75 mg/L - 93 mg/L<br>Salinity: 20% - 29%").setStyle({color: 'green'});
 
 var zone2 = L.polygon([
+  // ... (your polygon coordinates)
   [21.9, 90.01],
   [21.84, 90.07],
   [21.81, 90.11],
@@ -68,6 +70,7 @@ var zone2 = L.polygon([
 ]).addTo(map).bindPopup("Zone 2<br>Temperature: 23°C-30°C<br>BOD: 118 mg/L - 145 mg/L<br>COD: 72 mg/L - 87 mg/L<br>Salinity: 18% - 26%").setStyle({color: 'red'});
 
 var zone3 = L.polygon([
+  // ... (your polygon coordinates)
   [21.6, 89.17],
   [21.43, 89.19],
   [21.41, 89.35],
@@ -77,6 +80,7 @@ var zone3 = L.polygon([
 
 // Create a geoJSON object for the water flow path
 var waterFlowPath = {
+  // ... (your water flow path coordinates)
   "type": "Feature",
   "properties": {
     "stroke": "blue",
@@ -114,6 +118,10 @@ var waterFlowLayer = L.geoJSON(waterFlowPath, {
 
 // Start the water flow animation
 waterFlowLayer.animate();
+
+// Fit the map view to the polygons
+var polygonGroup = L.featureGroup([zone1, zone2, zone3]);
+map.fitBounds(polygonGroup.getBounds());
 
 </script>
 
