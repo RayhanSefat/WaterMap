@@ -9,6 +9,9 @@
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
+<!-- Leaflet.Animated -->
+<script src="https://unpkg.com/leaflet.animated@1.5.0/dist/leaflet.animated.js"></script>
+
 <style>
 #map {
   height: 400px;
@@ -71,6 +74,46 @@ var zone3 = L.polygon([
   [21.41, 89.94],
   [21.9, 90]
 ]).addTo(map).bindPopup("Zone 3<br>Temperature: 22°C-29°C<br>BOD: 117 mg/L - 142 mg/L<br>COD: 72 mg/L - 86 mg/L<br>Salinity: 17% - 25%").setStyle({color: 'blue'});
+
+// Create a geoJSON object for the water flow path
+var waterFlowPath = {
+  "type": "Feature",
+  "properties": {
+    "stroke": "blue",
+    "stroke-width": 2
+  },
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [
+      [21.44, 91.0],
+      [21.84, 91.8],
+      [21.44, 91.01]
+    ]
+  }
+};
+
+// Create a geoJSON layer for the water flow path with animation
+var waterFlowLayer = L.geoJSON(waterFlowPath, {
+  style: function (feature) {
+    return {
+      color: feature.properties.stroke,
+      weight: feature.properties["stroke-width"]
+    };
+  },
+  onEachFeature: function (feature, layer) {
+    layer.animate({
+      color: 'red',
+      weight: 5
+    }, {
+      duration: 3000, // Animation duration in milliseconds
+      easing: 'linear',
+      interval: 100 // Interval between animation frames in milliseconds
+    });
+  }
+}).addTo(map);
+
+// Start the water flow animation
+waterFlowLayer.animate();
 
 </script>
 
